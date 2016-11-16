@@ -9,8 +9,8 @@ namespace Desert_Bus_Text_Adventure
     class Input
     {
         #region Data Members
-        private Bus mBus;
-        private string mInput;
+        private Bus mBus; // Reference for Bus
+        private string mInput; // String to hold player input
         #endregion
 
         #region Accessors
@@ -21,14 +21,15 @@ namespace Desert_Bus_Text_Adventure
         #region Constructor
         public Input(Bus pBus)
         {
-            mBus = pBus;
+            mBus = pBus; // Reference to Bus object
         }
         #endregion
 
         #region Methods
         public void Listen()
         {
-            Console.WriteLine("Enter a command: forward, backward, left, right, exit");
+            // Main player entry
+            Console.WriteLine("Enter a command: forward, backward, left, right");
             Console.WriteLine("           ");
             Console.SetCursorPosition(0, 23);
             mInput = Console.ReadLine();
@@ -40,6 +41,7 @@ namespace Desert_Bus_Text_Adventure
 
         public void InputParser()
         {
+            // Check player entry, call approperiate method in the bus object
             switch (mInput)
             {
                 case "forward":
@@ -53,14 +55,6 @@ namespace Desert_Bus_Text_Adventure
                     break;
                 case "right":
                     mBus.Right();
-                    break;
-                case "exit":
-                    Console.Clear();
-                    Console.WriteLine("Thanks for playing");
-                    Console.WriteLine("Visit Desertbus.org");
-                    Console.WriteLine("Press any key to exit");
-                    Console.ReadLine();
-                    Environment.Exit(0);
                     break;
                 default:
                     Console.SetCursorPosition(0, 21);

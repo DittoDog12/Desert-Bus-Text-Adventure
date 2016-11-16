@@ -13,15 +13,29 @@ namespace Desert_Bus_Text_Adventure
         private int mTotalDist = 413; // Total distance to drive
         private Bus Bus1; // Bus object
         private Input Input1; // Input text parser object
-        private string mDest = "Las Vegas";
-        private int mPoints = 0;
+        private string mDest = "Las Vegas"; // String to hold Current destination
+        private int mPoints = 0; // Int to hold points
         private ConsoleKeyInfo mKeypress; // Used for new game
+        private bool mExit = false;
+        #endregion
+
+        #region Accessors
+
+        // Gives Kernel access to Bus variables
+        public bool aExit
+        {
+            get { return mExit; }
+        }
+        public bool aRunGame
+        {
+            get { return mRunGame; }
+        }
         #endregion
 
         #region Constructor
         public Kernel()
         {
-
+            Initialize();
         }
         #endregion
 
@@ -34,35 +48,30 @@ namespace Desert_Bus_Text_Adventure
             Console.WriteLine("A text adventrue based on the Desert Bus for Hope Game Jam on Itch.io");
             Console.WriteLine("You should check out Desertbus.org");
             Console.WriteLine("Controls are printed on screen at each point");
-            Console.WriteLine("Press any key to start your adventure");
+            Console.WriteLine("Press enter key to start your adventure");
             Console.ReadKey();
             BeginGame();
         }
 
-        private void MasterLoop()
+        public void MasterLoop()
         {
-            while (mRunGame == true)
+            // While bus Odometer is less than the total distance run the main loop
+            if (Bus1.aOdo < mTotalDist)
             {
-                if (Bus1.aOdo < mTotalDist)
-                {
-                    // Get player input
-                    Console.SetCursorPosition(0, 0);
-                    Console.WriteLine("Road Position: {0}. Bus Temperature: {1}. Points: {2}", Bus1.aRoadpos, Bus1.aTemp, mPoints);
-                    Console.SetCursorPosition(0, 22);
-                    Input1.Listen();
-                    CheckCrash();
-                }
-                else
-                {
-                   ReachDest();
-                }
-            
+                
+                // Draw stats at top of screen
+                Console.SetCursorPosition(0, 0);
+                Console.WriteLine("Road Position: {0}. Bus Temperature: {1}. Points: {2}", Bus1.aRoadpos, Bus1.aTemp, mPoints);
+
+                // Get player input
+                Console.SetCursorPosition(0, 22);
+                Input1.Listen();
+                CheckCrash();
             }
-            Console.WriteLine("Thanks for playing");
-            Console.WriteLine("Visit Desertbus.org");
-            Console.WriteLine("Press any key to exit");
-            Console.ReadLine();
-            Environment.Exit(0);
+            else // When bus reaches Destination, call ReachDest()
+            {
+                ReachDest();
+            }  
         }
 
         private void BeginGame()
@@ -77,53 +86,35 @@ namespace Desert_Bus_Text_Adventure
             Bus1 = new Bus(mTotalDist);
             Input1 = new Input(Bus1);
             mRunGame = true;
-            MasterLoop();
         }
 
         private void CheckCrash()
         {
+            // If bus overheats cause crash, call Restart() to ask player to restart
             if (Bus1.aTemp > 10)
             {
                 Console.Clear();
+                Console.SetCursorPosition(0, 21);
                 Console.WriteLine("The bus has over heated");
-                Console.WriteLine("Do you want to Restart? Y/N");
-                switch (mKeypress.Key)
-                {
-                    case ConsoleKey.Y:
-                        mTotalDist = 0;
-                        Bus1.Reset();
-                        MasterLoop();
-                        break;
-
-                    case ConsoleKey.N:
-                        mRunGame = false;
-                        break;
-                }
+                Restart();
             }
+
+            // If bus crashes on left or right of the road, call Restart() to ask player to restart
             if (Bus1.aRoadpos > 10 || Bus1.aRoadpos < 0)
             {
                 Console.Clear();
+                Console.SetCursorPosition(0, 21);
                 Console.WriteLine("The bus has crashed");
-                Console.WriteLine("Do you want to Restart? Y/N");
-                switch (mKeypress.Key)
-                {
-                    case ConsoleKey.Y:
-                        mTotalDist = 0;
-                        Bus1.Reset();
-                        MasterLoop();
-                        break;
-
-                    case ConsoleKey.N:
-                        mRunGame = false;
-                        break;
-                }
+                Restart();
             }
         }
 
         private void ReachDest()
         {
+            // When player reaches destination, add a point and ask to go back, if yes change destination string, if no trigger exit hook
             Console.Clear();
             mPoints++;
+            Console.SetCursorPosition(0, 0);
             Console.WriteLine("Congratualtions, you made it to {0}", mDest);
             Console.WriteLine("Do you want to go back? Y/N");
             mKeypress = Console.ReadKey();
@@ -142,7 +133,26 @@ namespace Desert_Bus_Text_Adventure
                     break;
 
                 case ConsoleKey.N:
-                    mRunGame = false;
+                    mExit = true;
+                    break;
+            }
+        }
+
+        private void Restart()
+        {
+            // If player crashes ask to restart, if yes reset bus variables and restart master loop, if no then trigger exit hook 
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("Do you want to Restart? Y/N");
+            switch (mKeypress.Key)
+            {
+                case ConsoleKey.Y:
+                    mTotalDist = 0;
+                    Bus1.Reset();
+                    MasterLoop();
+                    break;
+
+                case ConsoleKey.N:
+                    mExit = true;
                     break;
             }
         }

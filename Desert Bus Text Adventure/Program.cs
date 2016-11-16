@@ -11,7 +11,19 @@ namespace Desert_Bus_Text_Adventure
         static void Main(string[] args)
         {
             Kernel Kernel1 = new Kernel();
-            Kernel1.Initialize();
+            while (Console.ReadKey(true).Key != ConsoleKey.Escape || Kernel1.aExit == false)
+            {
+                if (Kernel1.aRunGame == true)
+                {
+                    Kernel1.MasterLoop();
+                }
+            }
+            // Exit hook
+            Console.WriteLine("Thanks for playing");
+            Console.WriteLine("Visit Desertbus.org");
+            Console.WriteLine("Press enter key to exit");
+            Console.ReadLine();
+            Environment.Exit(0);
         }
     }
 }
