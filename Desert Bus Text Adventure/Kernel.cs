@@ -129,6 +129,7 @@ namespace Desert_Bus_Text_Adventure
                     {
                         mDest = "Las Vegas";
                     }
+                    Bus1.Reset();
                     MasterLoop();
                     break;
 
@@ -143,6 +144,7 @@ namespace Desert_Bus_Text_Adventure
             // If player crashes ask to restart, if yes reset bus variables and restart master loop, if no then trigger exit hook 
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("Do you want to Restart? Y/N");
+            mKeypress = Console.ReadKey();
             switch (mKeypress.Key)
             {
                 case ConsoleKey.Y:
