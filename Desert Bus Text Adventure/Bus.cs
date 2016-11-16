@@ -62,7 +62,7 @@ namespace Desert_Bus_Text_Adventure
                 mTemp--;
             }
             Console.SetCursorPosition(0, 21);
-            Console.WriteLine("                       ");
+            Console.WriteLine("                                       ");
             Console.SetCursorPosition(0, 21);
 
             // Trigger bug splat at random interval created in Constructor

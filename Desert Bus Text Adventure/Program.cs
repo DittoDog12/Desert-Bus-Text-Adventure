@@ -11,7 +11,7 @@ namespace Desert_Bus_Text_Adventure
         static void Main(string[] args)
         {
             Kernel Kernel1 = new Kernel();
-            while (Console.ReadKey(true).Key != ConsoleKey.Escape || Kernel1.aExit == false)
+            while (Kernel1.aExit == false)
             {
                 if (Kernel1.aRunGame == true)
                 {
@@ -19,6 +19,7 @@ namespace Desert_Bus_Text_Adventure
                 }
             }
             // Exit hook
+            Console.Clear();
             Console.WriteLine("Thanks for playing");
             Console.WriteLine("Visit Desertbus.org");
             Console.WriteLine("Press enter key to exit");

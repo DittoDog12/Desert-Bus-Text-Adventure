@@ -29,7 +29,8 @@ namespace Desert_Bus_Text_Adventure
         public void Listen()
         {
             // Main player entry
-            Console.WriteLine("Enter a command: forward, backward, left, right");
+            Console.SetCursorPosition(0, 22);
+            Console.WriteLine("Enter a command: forward, backward, left, right, pause");
             Console.WriteLine("           ");
             Console.SetCursorPosition(0, 23);
             mInput = Console.ReadLine();
@@ -55,6 +56,12 @@ namespace Desert_Bus_Text_Adventure
                     break;
                 case "right":
                     mBus.Right();
+                    break;
+                case "pause":
+                    Console.SetCursorPosition(0, 21);
+                    Console.WriteLine("                       ");
+                    Console.SetCursorPosition(0, 21);
+                    Console.WriteLine("The horn beeps");
                     break;
                 default:
                     Console.SetCursorPosition(0, 21);

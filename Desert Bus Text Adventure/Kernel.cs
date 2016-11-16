@@ -64,7 +64,6 @@ namespace Desert_Bus_Text_Adventure
                 Console.WriteLine("Road Position: {0}. Bus Temperature: {1}. Points: {2}", Bus1.aRoadpos, Bus1.aTemp, mPoints);
 
                 // Get player input
-                Console.SetCursorPosition(0, 22);
                 Input1.Listen();
                 CheckCrash();
             }
@@ -148,8 +147,11 @@ namespace Desert_Bus_Text_Adventure
             switch (mKeypress.Key)
             {
                 case ConsoleKey.Y:
-                    mTotalDist = 0;
                     Bus1.Reset();
+                    Console.SetCursorPosition(0, 1);
+                    Console.WriteLine("         ");
+                    Console.SetCursorPosition(0, 21);
+                    Console.WriteLine("                     ");
                     MasterLoop();
                     break;
 
