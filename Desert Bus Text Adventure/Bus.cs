@@ -12,6 +12,8 @@ namespace Desert_Bus_Text_Adventure
         private int mOdo = 0;
         private int mTemp = 0; // 
         private int mRoadPos = 6; // 5 is central, 0 is crash on left, 10 is crash on right
+        private Random rand = new Random();
+        private int mBugSplat;
         private string mDriver;
         #endregion
 
@@ -39,9 +41,10 @@ namespace Desert_Bus_Text_Adventure
         #endregion
 
         #region Constructor
-        public Bus()
+        public Bus(int pTotalDist)
         {
-
+            // Create Bugsplat time
+            mBugSplat = rand.Next(0, pTotalDist);
         }
         #endregion
 
@@ -57,7 +60,17 @@ namespace Desert_Bus_Text_Adventure
             Console.SetCursorPosition(0, 21);
             Console.WriteLine("                       ");
             Console.SetCursorPosition(0, 21);
-            Console.WriteLine("You see desert");
+
+            if (mOdo == mBugSplat)
+            {
+                Console.WriteLine("A bug splats on the windscreen");
+            }
+            else
+            {
+                Console.WriteLine("You see desert");
+            }
+           
+
         }
 
         public void Left()

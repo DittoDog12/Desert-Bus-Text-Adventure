@@ -74,7 +74,7 @@ namespace Desert_Bus_Text_Adventure
             Console.Clear();
 
             // Create a bus and input parser and start the main loop
-            Bus1 = new Bus();
+            Bus1 = new Bus(mTotalDist);
             Input1 = new Input(Bus1);
             mRunGame = true;
             MasterLoop();
